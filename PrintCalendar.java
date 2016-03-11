@@ -1,8 +1,18 @@
 import java.util.*;
 
 public class PrintCalendar {
+	static GregorianCalendar Gcalendar;
+	
 	public static void main(String[] args){
 		Scanner input=new Scanner(System.in);
+		Gcalendar = new GregorianCalendar();
+		Date date = new Date();
+		System.out.println(date.toString());
+		
+		
+		Gcalendar.setTime(date);
+		
+		Gcalendar.set(Calendar.DAY_OF_MONTH, 1);
 		
 		System.out.print("Enter full year(e.g., 2012):");
 		int year=input.nextInt();
@@ -78,14 +88,23 @@ public class PrintCalendar {
 	}
 	
 	public static int getStartDay(int year, int month){
+		/*
 		final int START_DAY_FOR_JAN_1_1800=3;
 		int totalNumberOfDays=getTotalNumberOfDays(year, month);
 		
 		return(totalNumberOfDays+START_DAY_FOR_JAN_1_1800)%7;
+		*/
+		
+		//
+		int D_week = Gcalendar.get(Calendar.DAY_OF_WEEK);
+		return D_week-1;
+		//
 	}
 	
+	/*
 	public static int getTotalNumberOfDays(int year, int month){
 		int total=0;
+		
 		
 		for(int i=1800;i<year;i++){
 			if(isLeapYear(i)){
@@ -100,10 +119,13 @@ public class PrintCalendar {
 			total=total+getNumberOfDaysInMonth(year, i);
 		}
 		
+		
 		return total;
 	}
+	*/
 	
 	public static int getNumberOfDaysInMonth(int year, int month){
+		/*
 		if(month==1 || month==3 || month==5 || month==7 || month==8 || month==10 || month==12){
 			return 31;
 		}
@@ -115,11 +137,21 @@ public class PrintCalendar {
 		if(month==2){
 			return isLeapYear(year)?29:28;
 		}
+		*/
+		int total=0;
+		
+		while (Gcalendar.get(Calendar.MONTH) == month-1) {
+			total++;
+			Gcalendar.add(Calendar.DAY_OF_MONTH, 1);
+		}
 
-		return 0;
+		return total;
 	}
 	
+	/*
 	public static boolean isLeapYear(int year){
 		return year%400==0 || (year%4==0 && year%100!=0);
 	}
+	*/
+	
 }
